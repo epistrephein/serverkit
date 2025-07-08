@@ -1,0 +1,113 @@
+
+# ---------------------------------------------------------
+
+export PS1='\[\033[01;33m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+
+export VISUAL=vim
+export EDITOR=vim
+
+export TERM=xterm-256color
+export COLORTERM=truecolor
+
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+shopt -s nocaseglob;
+shopt -s histappend;
+shopt -s cdspell;
+
+# bash completion
+[[ -e /etc/bash_completion ]] && source /etc/bash_completion
+complete -cf sudo
+
+# autojump
+[[ -e /usr/share/autojump/autojump.sh ]] && source /usr/share/autojump/autojump.sh
+export AUTOJUMP_IGNORE_CASE=1
+
+# navigation
+alias l='ls -1'
+alias ll="ls -AFhl"
+
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+
+mkcd() { mkdir -p -- "$1" && cd -P -- "$1" || return; }
+cl() { if [ -d "${1:-$PWD}" ]; then ll "${1:-$PWD}"; else cat "$1"; fi }
+
+# updates
+alias u="apt list --upgradable"
+alias uuu="sudo apt-get update; sudo apt-get upgrade; sudo apt-get dist-upgrade; sudo apt-get autoremove; sudo apt-get autoclean"
+
+# network
+alias ipv4="curl -s -w '\n' v4.ident.me"
+alias ipv6="curl -s -w '\n' v6.ident.me"
+
+# git
+alias gss='git status -sb'
+alias glog="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
+alias gpull='git pull'
+alias gd='git diff'
+alias gdc='git diff --cached'
+alias gdn='git diff --name-only'
+
+# python
+alias py='python3'
+alias mkenv='python3 -m venv .venv'
+alias activate='source .venv/bin/activate'
+
+# aliases
+alias reload='source "$HOME/.bashrc"'
+
+alias untar='tar xvf'
+alias untargz='tar xzvf'
+
+alias timestamp='date "+%Y%m%dT%H%M%S"'
+
+alias rsyncz='rsync -avzhsP --exclude-from ~/.rsync_ignore'
+
+alias f='ag -g'
+
+alias whatmod='stat -c "%a"'
+
+# functions
+tarball() {
+  [ $# -ne 1 ] && { echo "Usage: tarball <folder>"; return 0; }
+  [ -d "$1" ] || { echo "$1: No such file or directory" >&2; return 1; }
+
+  folder="${1%/}"
+  archive_name="$(basename "$folder")"
+
+  find "$folder" -printf "%P\n" | tar cvf "$archive_name.tar" \
+    --exclude-from="$HOME/.tar_ignore" \
+    --transform "s,^,$archive_name/," \
+    --no-recursion -C "$folder" -T -
+}
+
+targz() {
+  [ $# -ne 1 ] && { echo "Usage: targz <folder>"; return 0; }
+  [ -d "$1" ] || { echo "$1: No such file or directory" >&2; return 1; }
+
+  folder="${1%/}"
+  archive_name="$(basename "$folder")"
+
+  find "$folder" -printf "%P\n" | tar czvf "$archive_name.tar.gz" \
+    --exclude-from="$HOME/.tar_ignore" \
+    --transform "s,^,$archive_name/," \
+    --no-recursion -C "$folder" -T -
+}
+
+dwn() {
+  [ $# -ne 1 ] && { echo "Usage: dwn <file>"; return 0; }
+  [ -e "$1" ] || { echo "$1: No such file or directory" >&2; return 1; }
+
+  username=$(whoami)
+  ip=$(curl -s -w '\n' v4.ident.me)
+  port=$(grep -m1 -P -o '(?<=Port )\d+' /etc/ssh/sshd_config)
+  filepath=$(realpath "$1")
+
+  echo "scp -rP $port $username@$ip:$filepath ."
+}
+
+# ---------------------------------------------------------

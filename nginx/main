@@ -1,0 +1,52 @@
+server {
+    listen 443 ssl http2 default deferred;
+    listen [::]:443 ssl http2;
+
+    server_name your.domain.com;
+
+    root /var/www/html;
+    index index.html;
+
+    # logs
+    access_log /var/log/nginx/your.domain.com.access.log;
+    error_log  /var/log/nginx/your.domain.com.error.log;
+
+    # errors
+    error_page 401 /401.html;
+    error_page 403 /403.html;
+    error_page 404 /404.html;
+
+    # SSL options
+    ssl_certificate /etc/nginx/certs/your.domain.com/fullchain.pem;
+    ssl_trusted_certificate /etc/nginx/certs/your.domain.com/fullchain.pem;
+    ssl_certificate_key /etc/nginx/certs/your.domain.com/key.pem;
+
+    ssl_session_timeout 1d;
+    ssl_session_cache shared:MozSSL:10m;
+    ssl_session_tickets off;
+
+    ssl_dhparam /etc/ssl/certs/dhparam.pem;
+
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
+    ssl_prefer_server_ciphers off;
+
+    add_header Strict-Transport-Security "max-age=63072000" always;
+
+    ssl_stapling on;
+    ssl_stapling_verify on;
+
+    resolver 1.1.1.1;
+
+    server_tokens off;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+
+server {
+    listen 80;
+    server_name your.domain.com;
+    return 301 https://$host$request_uri;
+}
