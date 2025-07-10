@@ -5,10 +5,10 @@
 # DATE:    2025-07-07
 
 # Configuration
-IP_FILE="$HOME/.cache/ipv4"
 TELEGRAM_CHAT_ID="<CHAT_ID>" # Replace with your Telegram chat ID
 TELEGRAM_BOT_TOKEN="<BOT_TOKEN>" # Replace with your Telegram bot token
-TELEGRAM_API_URL="https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage"
+
+IP_FILE="$HOME/.cache/ipv4"
 
 # Ensure cache dir exists
 mkdir -p "$(dirname "$IP_FILE")"
@@ -46,6 +46,8 @@ echo "$CURRENT_IP" > "$IP_FILE"
 MESSAGE="🌐 *${HOSTNAME}*: public IP changed 🌐
 Old: \`${PREVIOUS_IP}\`
 New: \`${CURRENT_IP}\`"
+
+TELEGRAM_API_URL="https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage"
 
 curl -s -X POST "$TELEGRAM_API_URL" \
   -d chat_id="$TELEGRAM_CHAT_ID" \

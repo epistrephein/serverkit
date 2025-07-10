@@ -4,11 +4,12 @@
 # VERSION: 1.0.0
 # DATE:    2025-07-07
 
+# Configuration
 declare -a DATABASES=(db1 db2 db3) # Replace with your actual database names
-
-TIMESTAMP=$(date '+%Y%m%dT%H%M%S')
-PGPASSFILE="$HOME/.pgpass"
 BUCKET_PATH="s3:epistrephein/databases" # Replace with your actual S3 bucket path
+
+PGPASSFILE="$HOME/.pgpass"
+TIMESTAMP=$(date '+%Y%m%dT%H%M%S')
 HOSTNAME=$(hostname -s)
 
 for db in "${DATABASES[@]}"; do

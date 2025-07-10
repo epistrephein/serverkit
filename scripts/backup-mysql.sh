@@ -4,11 +4,12 @@
 # VERSION: 1.0.2
 # DATE:    2022-07-16
 
+# Configuration
 declare -a DATABASES=(db1 db2 db3) # Replace with your actual database names
-
-TIMESTAMP=$(date '+%Y%m%dT%H%M%S')
-MYSQLFILE="$HOME/.mysqldump"
 BUCKET_PATH="s3:epistrephein/databases" # Replace with your actual S3 bucket path
+
+MYSQLFILE="$HOME/.mysqldump"
+TIMESTAMP=$(date '+%Y%m%dT%H%M%S')
 HOSTNAME=$(hostname -s)
 
 for db in "${DATABASES[@]}"; do
