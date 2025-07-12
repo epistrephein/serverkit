@@ -12,6 +12,7 @@ PGPASSFILE="$HOME/.pgpass"
 TIMESTAMP=$(date '+%Y%m%dT%H%M%S')
 HOSTNAME=$(hostname -s)
 
+# Backup each database and upload to S3
 for db in "${DATABASES[@]}"; do
   echo "Backing up: $db"
 
