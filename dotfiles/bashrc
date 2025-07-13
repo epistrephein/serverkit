@@ -1,6 +1,7 @@
 
-# ---------------------------------------------------------
+# --- CUSTOM SETTINGS -------------------------------------
 
+# shell settings
 export PS1='\[\033[01;33m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
 export VISUAL=vim
@@ -17,13 +18,8 @@ shopt -s nocaseglob;
 shopt -s histappend;
 shopt -s cdspell;
 
-# bash completion
-[[ -e /etc/bash_completion ]] && source /etc/bash_completion
-complete -cf sudo
-
-# autojump
-[[ -e /usr/share/autojump/autojump.sh ]] && source /usr/share/autojump/autojump.sh
-export AUTOJUMP_IGNORE_CASE=1
+# path
+export PATH="$HOME/.local/bin:$PATH"
 
 # navigation
 alias l='ls -1'
@@ -52,24 +48,19 @@ alias gd='git diff'
 alias gdc='git diff --cached'
 alias gdn='git diff --name-only'
 
+# utilities
+alias reload='source "$HOME/.bashrc"'
+alias untar='tar xvf'
+alias untargz='tar xzvf'
+alias timestamp='date "+%Y%m%dT%H%M%S"'
+alias rsyncz='rsync -avzhsP --exclude-from ~/.rsync_ignore'
+alias f='ag -g'
+alias whatmod='stat -c "%a"'
+
 # python
 alias py='python3'
 alias mkenv='python3 -m venv .venv'
 alias activate='source .venv/bin/activate'
-
-# aliases
-alias reload='source "$HOME/.bashrc"'
-
-alias untar='tar xvf'
-alias untargz='tar xzvf'
-
-alias timestamp='date "+%Y%m%dT%H%M%S"'
-
-alias rsyncz='rsync -avzhsP --exclude-from ~/.rsync_ignore'
-
-alias f='ag -g'
-
-alias whatmod='stat -c "%a"'
 
 # functions
 tarball() {
@@ -109,5 +100,12 @@ dwn() {
 
   echo "scp -rP $port $username@$ip:$filepath ."
 }
+
+# external resources
+[[ -e /etc/bash_completion ]] && source /etc/bash_completion
+complete -cf sudo
+
+[[ -e /usr/share/autojump/autojump.sh ]] && source /usr/share/autojump/autojump.sh
+export AUTOJUMP_IGNORE_CASE=1
 
 # ---------------------------------------------------------
