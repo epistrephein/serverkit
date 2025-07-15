@@ -1,8 +1,5 @@
 #!/bin/bash
-
 # Notify on public IPv4 change via Telegram.
-# VERSION: 1.0.0
-# DATE:    2025-07-07
 
 # Configuration
 TELEGRAM_CHAT_ID="<CHAT_ID>" # Replace with your Telegram chat ID

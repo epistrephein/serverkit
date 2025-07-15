@@ -1,12 +1,9 @@
 #!/bin/bash
-
-# Targz and upload .backup folder to S3.
-# VERSION: 1.0.2
-# DATE:    2022-08-15
+# Targz and upload backup folder to S3.
 
 # Configuration
 BACKUP_FOLDER="$HOME/.local/backup" # Replace with your actual backup folder path
-BUCKET_PATH="s3:epistrephein/backups" # Replace with your actual S3 bucket path
+BUCKET_PATH="s3:my_bucket/backups" # Replace with your actual S3 bucket path
 
 HOSTNAME=$(hostname -s)
 TIMESTAMP=$(date '+%Y%m%dT%H%M%S')

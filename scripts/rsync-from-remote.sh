@@ -1,8 +1,5 @@
 #!/bin/bash
-
 # Rsync files from a remote server to a local directory.
-# VERSION: 1.0.0
-# DATE:    2022-07-12
 
 # Configuration
 REMOTE_ALIAS="my_server" # Replace with your actual remote alias

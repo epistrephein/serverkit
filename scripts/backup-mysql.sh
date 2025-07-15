@@ -1,12 +1,9 @@
 #!/bin/bash
-
 # Dump and backup MySQL databases to S3.
-# VERSION: 1.0.2
-# DATE:    2022-07-16
 
 # Configuration
 declare -a DATABASES=(db1 db2 db3) # Replace with your actual database names
-BUCKET_PATH="s3:epistrephein/databases" # Replace with your actual S3 bucket path
+BUCKET_PATH="s3:my_bucket/databases" # Replace with your actual S3 bucket path
 
 MYSQLFILE="$HOME/.mysqldump"
 TIMESTAMP=$(date '+%Y%m%dT%H%M%S')
