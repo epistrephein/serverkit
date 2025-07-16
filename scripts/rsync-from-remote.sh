@@ -2,7 +2,7 @@
 # Rsync files from a remote server to a local directory.
 
 # Configuration
-REMOTE_ALIAS="my_server" # Replace with your actual remote alias
+REMOTE_ALIAS="your_server" # Replace with your actual remote alias
 DEST_DIR="/tmp/rsync" # Replace with your actual destination
 
 FILELIST="filelist.txt"

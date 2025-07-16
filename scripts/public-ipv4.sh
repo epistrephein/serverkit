@@ -2,8 +2,8 @@
 # Notify on public IPv4 change via Telegram.
 
 # Configuration
-TELEGRAM_CHAT_ID="<CHAT_ID>" # Replace with your Telegram chat ID
-TELEGRAM_BOT_TOKEN="<BOT_TOKEN>" # Replace with your Telegram bot token
+TELEGRAM_CHAT_ID="your_chat_id" # Replace with your Telegram chat ID
+TELEGRAM_BOT_TOKEN="your_bot_token" # Replace with your Telegram bot token
 
 IP_FILE="$HOME/.cache/ipv4"
 

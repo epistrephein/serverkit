@@ -3,7 +3,7 @@
 
 # Configuration
 BACKUP_FOLDER="$HOME/.local/backup" # Replace with your actual backup folder path
-BUCKET_PATH="s3:my_bucket/backups" # Replace with your actual S3 bucket path
+BUCKET_PATH="s3:your_bucket/backups" # Replace with your actual S3 bucket path
 
 HOSTNAME=$(hostname -s)
 TIMESTAMP=$(date '+%Y%m%dT%H%M%S')
