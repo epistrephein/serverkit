@@ -1,9 +1,10 @@
 server {
     listen 80;
+    listen [::]:80;
 
     server_name your.domain.com;
 
-    root /var/www/html;
+    root /var/www/your.domain.com;
     index index.html;
 
     location / {

@@ -4,19 +4,16 @@ server {
 
     server_name your.domain.com;
 
-    root /var/www/html;
+    root /var/www/your.domain.com;
     index index.html;
 
-    # logs
     access_log /var/log/nginx/your.domain.com.access.log;
     error_log  /var/log/nginx/your.domain.com.error.log;
 
-    # errors
     error_page 401 /401.html;
     error_page 403 /403.html;
     error_page 404 /404.html;
 
-    # SSL options
     ssl_certificate /etc/nginx/certs/your.domain.com/fullchain.pem;
     ssl_trusted_certificate /etc/nginx/certs/your.domain.com/fullchain.pem;
     ssl_certificate_key /etc/nginx/certs/your.domain.com/key.pem;
@@ -47,6 +44,9 @@ server {
 
 server {
     listen 80;
+    listen [::]:80;
+
     server_name your.domain.com;
+
     return 301 https://$host$request_uri;
 }
