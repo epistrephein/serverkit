@@ -56,6 +56,15 @@ sudo sed -i "s|your\.domain\.com|$NGINXSITE|g" /etc/nginx/sites-available/$NGINX
 sudo sed -i "s|/var/www/html|/var/www/$NGINXSITE|g" /etc/nginx/sites-available/$NGINXSITE
 sudo ln -s /etc/nginx/sites-available/$NGINXSITE /etc/nginx/sites-enabled/$NGINXSITE
 sudo systemctl reload nginx
+
+### setup
+
+This contains a script for the initial setup of a server.  
+Customize the variables at the top and then run it as root:
+
+```bash
+sudo su -
+/tmp/serverkit/setup/ubuntu-24.04.sh
 ```
 
 ### scripts
@@ -69,7 +78,7 @@ chmod +x ~/.local/scripts/*.sh
 You can add the scripts to cron to run them periodically:
 
 ```
-# -- SCRIPTS ------------------
+# -- SCRIPTS -------------------
 20 */3 * * * "/home/your_user/.local/scripts/public-ipv4.sh"
 
 0 5 * * 2 "/home/your_user/.local/scripts/dump-settings.sh"
