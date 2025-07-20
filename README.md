@@ -40,22 +40,44 @@ sudo chmod +x /etc/update-motd.d/20-banner
 ### nginx & www
 
 ```bash
+SERVER_NAME=myserver
+SERVER_URL="$SERVER_NAME.domain.com"
+
 # Create the website directory and set permissions
-NGINXSITE="example.com"
-sudo mkdir -p /var/www/$NGINXSITE/
-sudo chown -R $USER:$USER /var/www/$NGINXSITE
+sudo mkdir -p /var/www/$SERVER_URL/
+sudo chown -R $USER:$USER /var/www/$SERVER_URL
 sudo chmod -R 755 /var/www
 
 # Copy the website files and update the HTML files
-cp /tmp/serverkit/www/* /var/www/$NGINXSITE/
-sed -i "s|machine|$NGINXSITE|g" /var/www/$NGINXSITE/*.html
+cp /tmp/serverkit/www/* /var/www/$SERVER_URL/
+sed -i "s|machine|$SERVER_NAME|g" /var/www/$SERVER_URL/*.html
 
 # Copy the nginx configuration and set it up
-sudo cp /tmp/serverkit/nginx/basic /etc/nginx/sites-available/$NGINXSITE
-sudo sed -i "s|your\.domain\.com|$NGINXSITE|g" /etc/nginx/sites-available/$NGINXSITE
-sudo sed -i "s|/var/www/html|/var/www/$NGINXSITE|g" /etc/nginx/sites-available/$NGINXSITE
-sudo ln -s /etc/nginx/sites-available/$NGINXSITE /etc/nginx/sites-enabled/$NGINXSITE
+sudo cp /tmp/serverkit/nginx/basic /etc/nginx/sites-available/$SERVER_URL
+sudo sed -i "s|your\.domain\.com|$SERVER_URL|g" /etc/nginx/sites-available/$SERVER_URL
+sudo sed -i "s|/var/www/html|/var/www/$SERVER_URL|g" /etc/nginx/sites-available/$SERVER_URL
+sudo ln -s /etc/nginx/sites-available/$SERVER_URL /etc/nginx/sites-enabled/$SERVER_URL
+
+# Remove the default nginx configuration and reload nginx
+sudo rm /etc/nginx/sites-enabled/default
+sudo rm /etc/nginx/sites-available/default
+sudo rm -rf /var/www/html
 sudo systemctl reload nginx
+
+# Create the SSL directory for site certificates
+sudo mkdir -p /etc/nginx/certs/$SERVER_URL
+sudo chown -R $USER:$USER /etc/nginx/certs/$SERVER_URL
+
+# Issue and install the SSL certificate using acme.sh, which will verify the domain ownership
+acme.sh --issue -d $SERVER_URL -w /var/www/$SERVER_URL
+acme.sh --install-cert -d $SERVER_URL --key-file /etc/nginx/certs/$SERVER_URL/key.pem --fullchain-file /etc/nginx/certs/$SERVER_URL/fullchain.pem --reloadcmd "sudo systemctl restart nginx"
+
+# Copy the SSL nginx configuration and set it up
+sudo cp /tmp/serverkit/nginx/main+ssl /etc/nginx/sites-available/$SERVER_URL
+sudo sed -i "s|your\.domain\.com|$SERVER_URL|g" /etc/nginx/sites-available/$SERVER_URL
+sudo sed -i "s|/var/www/html|/var/www/$SERVER_URL|g" /etc/nginx/sites-available/$SERVER_URL
+sudo systemctl reload nginx
+```
 
 ### setup
 
