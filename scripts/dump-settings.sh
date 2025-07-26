@@ -22,11 +22,12 @@ apt list --manual-installed=true 2>/dev/null | tail -n +2 | cut -d/ -f1 > "$BACK
 
 # Backup nginx sites configurations
 mkdir -p "$BACKUP_FOLDER/nginx"
-rsync -a "/etc/nginx/sites-available"/* "$BACKUP_FOLDER/nginx/"
+rsync -a --delete "/etc/nginx/sites-available/" "$BACKUP_FOLDER/nginx/"
 
 # Backup www directories
-rsync -a "/var/www" "$BACKUP_FOLDER/" --exclude={.git,vendor,node_modules,*.pid,*.sock}
+mkdir -p "$BACKUP_FOLDER/www"
+rsync -a --delete "/var/www/" "$BACKUP_FOLDER/www/" --exclude={.git,vendor,node_modules,*.pid,*.sock}
 
 # Backup scripts
 mkdir -p "$BACKUP_FOLDER/scripts"
-rsync -a --ignore-missing-args "$HOME/.local/scripts" "$BACKUP_FOLDER/"
+rsync -a --delete --ignore-missing-args "$HOME/.local/scripts/" "$BACKUP_FOLDER/scripts/"
