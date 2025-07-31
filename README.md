@@ -101,7 +101,8 @@ You can add the scripts to cron to run them periodically:
 
 ```
 # -- SCRIPTS -------------------
-20 */3 * * * "/home/your_user/.local/scripts/public-ipv4.sh"
+15 */3 * * * "/home/your_user/.local/scripts/notify-disk-full.sh"
+20 */3 * * * "/home/your_user/.local/scripts/notify-public-ipv4.sh"
 
 0 5 * * 2 "/home/your_user/.local/scripts/dump-settings.sh"
 
