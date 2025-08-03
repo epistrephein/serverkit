@@ -57,11 +57,6 @@ alias rsyncz='rsync -avzhsP --exclude-from ~/.rsync_ignore'
 alias f='ag -g'
 alias whatmod='stat -c "%a"'
 
-# python
-alias py='python3'
-alias mkenv='python3 -m venv .venv'
-alias activate='source .venv/bin/activate'
-
 # functions
 tarball() {
   [ $# -ne 1 ] && { echo "Usage: tarball <folder>"; return 0; }
