@@ -18,9 +18,6 @@ shopt -s nocaseglob;
 shopt -s histappend;
 shopt -s cdspell;
 
-# path
-export PATH="$HOME/.local/bin:$PATH"
-
 # navigation
 alias l='ls -1'
 alias ll="ls -AFhl"
