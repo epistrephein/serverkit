@@ -26,7 +26,7 @@ rsync -a --delete "/etc/nginx/sites-available/" "$BACKUP_FOLDER/nginx/"
 
 # Backup www directories
 mkdir -p "$BACKUP_FOLDER/www"
-rsync -a --delete "/var/www/" "$BACKUP_FOLDER/www/" --exclude={.git,vendor,node_modules,*.pid,*.sock}
+rsync -a --delete "/var/www/" "$BACKUP_FOLDER/www/" --exclude={.git,.venv,vendor,node_modules,*.pid,*.sock}
 
 # Backup scripts
 mkdir -p "$BACKUP_FOLDER/scripts"
