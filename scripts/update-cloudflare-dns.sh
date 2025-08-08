@@ -7,8 +7,8 @@ TELEGRAM_BOT_TOKEN="your_bot_token" # Replace with your Telegram bot token
 
 CLOUDFLARE_API_TOKEN="your_api_token" # Replace with your Cloudflare API token
 CLOUDFLARE_ZONE_ID="your_zone_id" # Replace with your Cloudflare zone ID
-CLOUDFLARE_RECORD_ID="your_record_id" # Replace with your Cloudflare DNS record ID
-CLOUDFLARE_RECORD_NAME="your_record_name" # Replace with your Cloudflare DNS record name
+CLOUDFLARE_RECORD_IDS=("record_id_a" "record_id_b") # Replace with your Cloudflare DNS record IDs
+CLOUDFLARE_RECORD_NAMES=("a.example.com" "b.example.com") # Replace with your Cloudflare DNS record names
 
 IP_FILE="$HOME/.cache/ipv4"
 
@@ -45,27 +45,36 @@ echo "IP changed: $PREVIOUS_IP → $CURRENT_IP"
 echo "$CURRENT_IP" > "$IP_FILE"
 
 # Update Cloudflare DNS record
-RESPONSE=$(curl -s https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/dns_records/$CLOUDFLARE_RECORD_ID \
-  -X PATCH \
-  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-  -H 'Content-Type: application/json' \
-  -d "{\"name\":\"$CLOUDFLARE_RECORD_NAME\",\"ttl\":300,\"type\":\"A\",\"content\":\"$CURRENT_IP\",\"proxied\":false}"
-)
+CLOUDFLARE_STATUS_LIST=()
 
-if echo "$RESPONSE" | grep -q '"success":true'; then
-  echo "Cloudflare DNS updated successfully."
-  CLOUDFLARE_STATUS="updated"
-else
-  echo "Cloudflare DNS update failed."
-  echo "$RESPONSE"
-  CLOUDFLARE_STATUS="failed to update"
-fi
+for i in "${!CLOUDFLARE_RECORD_NAMES[@]}"; do
+  RECORD_ID="${CLOUDFLARE_RECORD_IDS[$i]}"
+  RECORD_NAME="${CLOUDFLARE_RECORD_NAMES[$i]}"
+
+  RESPONSE=$(curl -s https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/dns_records/$RECORD_ID \
+    -X PATCH \
+    -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+    -H 'Content-Type: application/json' \
+    -d "{\"name\":\"$RECORD_NAME\",\"ttl\":1,\"type\":\"A\",\"content\":\"$CURRENT_IP\",\"proxied\":false}"
+  )
+
+  if echo "$RESPONSE" | grep -q '"success":true'; then
+    echo "Cloudflare DNS $RECORD_NAME updated successfully."
+    CLOUDFLARE_STATUS_LIST+=("✅$RECORD_NAME")
+  else
+    echo "Cloudflare DNS $RECORD_NAME update failed."
+    echo "$RESPONSE"
+    CLOUDFLARE_STATUS_LIST+=("❌$RECORD_NAME")
+  fi
+done
 
 # Send Telegram message
+CLOUDFLARE_STATUS=$(IFS=, ; echo "${CLOUDFLARE_STATUS_LIST[*]}")
+
 MESSAGE="🌐 *${HOSTNAME}*: public IP changed 🌐
 Old: \`${PREVIOUS_IP}\`
 New: \`${CURRENT_IP}\`
-Cloudflare DNS: \`${CLOUDFLARE_STATUS}\`"
+DNS: \`${CLOUDFLARE_STATUS}\`"
 
 TELEGRAM_API_URL="https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage"
 
