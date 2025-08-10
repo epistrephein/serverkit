@@ -79,6 +79,9 @@ sudo sed -i "s|/var/www/html|/var/www/$SERVER_URL|g" /etc/nginx/sites-available/
 sudo systemctl reload nginx
 ```
 
+### recipes
+This contains various guides for installing and configuring software on a server.
+
 ### setup
 
 This contains a script for the initial setup of a server.  
