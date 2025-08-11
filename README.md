@@ -80,6 +80,7 @@ sudo systemctl reload nginx
 ```
 
 ### recipes
+
 This contains various guides for installing and configuring software on a server.
 
 ### setup
