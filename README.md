@@ -8,7 +8,7 @@ Clone the repository somewhere on your system, and then install the components
 you need.
 
 ```bash
-git clone https://github.com/epistrephein/serverkit.git /tmp/serverkit
+git clone https://github.com/epistrephein/serverkit /tmp/serverkit
 ```
 
 ### colors
@@ -28,13 +28,6 @@ cat /tmp/serverkit/dotfiles/bashrc >> ~/.bashrc
 cat /tmp/serverkit/dotfiles/inputrc > ~/.inputrc
 cat /tmp/serverkit/dotfiles/vimrc > ~/.vimrc
 cat /tmp/serverkit/dotfiles/tmux.conf > ~/.tmux.conf
-```
-
-### motd
-
-```bash
-sudo cp /tmp/serverkit/motd/20-banner /etc/update-motd.d/20-banner
-sudo chmod +x /etc/update-motd.d/20-banner
 ```
 
 ### nginx & www

@@ -79,7 +79,7 @@ EOF
 update-alternatives --set editor /usr/bin/vim.basic
 
 # clone serverkit repo
-git clone https://github.com/epistrephein/serverkit.git /tmp/serverkit
+git clone https://github.com/epistrephein/serverkit /tmp/serverkit
 
 # add basic dotfiles
 cat /tmp/serverkit/dotfiles/bashrc >> "/root/.bashrc"
@@ -139,9 +139,18 @@ if [ -f /etc/update-motd.d/97-overlayroot ]; then
   chmod -x /etc/update-motd.d/97-overlayroot
 fi
 
-# copy ANSI Shadow banner
+# create ANSI Shadow banner
 if [ ! -f /etc/update-motd.d/20-banner ]; then
-  cp /tmp/serverkit/motd/20-banner /etc/update-motd.d/20-banner
+  apt-get install -y figlet
+  git clone https://github.com/epistrephein/figlet-fonts /tmp/figlet-fonts
+  cp -n /tmp/figlet-fonts/*.flf /tmp/figlet-fonts/*.flc /usr/share/figlet
+
+  echo -e '#!/bin/sh\n#\n# 20-banner - MOTD ascii art banner\n' >> /tmp/banner
+  echo -e "cat << 'EOF'\n" >> /tmp/banner
+  figlet -f "ANSI Shadow" $(hostname -s) | sed '$d' | sed 's/^/  /' >> /tmp/banner
+  echo "EOF" >> /tmp/banner
+
+  mv /tmp/banner /etc/update-motd.d/20-banner
   chmod +x /etc/update-motd.d/20-banner
 fi
 
