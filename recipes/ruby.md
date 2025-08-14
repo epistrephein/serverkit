@@ -1,6 +1,8 @@
 # Ruby
 
-## Install from source
+## Installation
+
+### Install from source
 
 Run as root (`sudo su -`):
 
@@ -33,7 +35,7 @@ gem update --system
 gem install bundler irb foreman
 ```
 
-## Update
+### Update
 
 To update patch versions (e.g. from 3.4.4 to 3.4.5), simply follow the same
 installation steps as above. The `make install` command will overwrite the
@@ -62,7 +64,7 @@ rm -rf "/usr/local/share/ri/${OLD_VERSION%.*}.0"
 rm -f "/usr/local/lib/pkgconfig/ruby-${OLD_VERSION%.*}.pc"
 ```
 
-## Uninstall
+### Uninstall
 
 To completely remove Ruby installed from source, you can manually delete the
 files and directories created during the installation.  
@@ -78,9 +80,12 @@ rm -rf /usr/local/lib/ruby/
 # headers
 rm -rf /usr/local/include/ruby-*
 
+# pkgconfig
+rm -f /usr/local/lib/pkgconfig/ruby*.pc
+
 # documentation
 rm -rf /usr/local/share/ri
 
-# pkgconfig
-rm -f /usr/local/lib/pkgconfig/ruby*.pc
+# man pages
+rm -f /usr/local/share/man/man1/{erb,irb,ri,ruby}.1
 ```
