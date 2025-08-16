@@ -11,7 +11,7 @@ VERSION=3.13.6
 
 # install dependencies
 apt update
-apt install -y make build-essential pkg-config libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev libgdbm-compat-dev git
+apt install -y make build-essential pkg-config libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev libgdbm-compat-dev libnsl-dev git
 
 # move to a temporary directory and download source
 cd /tmp
@@ -53,6 +53,7 @@ update-alternatives --remove python "/usr/local/bin/python${OLD_VERSION%.*}"
 
 # binaries
 rm -f "/usr/local/bin/idle${OLD_VERSION%.*}"
+rm -f "/usr/local/bin/pip"
 rm -f "/usr/local/bin/pip${OLD_VERSION%.*}"
 rm -f "/usr/local/bin/pydoc${OLD_VERSION%.*}"
 rm -f "/usr/local/bin/python${OLD_VERSION%.*}-config"

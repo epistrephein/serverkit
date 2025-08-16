@@ -5,19 +5,18 @@ cache, and message broker. It supports various data structures such as strings,
 hashes, lists, sets, and more. It is known for its high performance, flexibility,
 and ease of use.
 
-## Install
+## Installation
+
+### Install
 
 ```bash
 # ensure required packages are installed
-sudo apt-get install lsb-release curl gpg
-
-# ensure keyring path exists
-sudo mkdir -p /etc/apt/keyrings
+sudo apt install -y lsb-release curl gpg
 
 # download and store Redis GPG key
 curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/redis-archive-keyring.gpg
 
-# add the Redis APT source using the new keyring path
+# add the Redis APT source
 echo "deb [signed-by=/etc/apt/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
 
 # update and install Redis
@@ -28,7 +27,7 @@ sudo apt install redis
 redis-cli --version
 ```
 
-## Uninstall
+### Uninstall
 
 ```bash
 # stop Redis if running
