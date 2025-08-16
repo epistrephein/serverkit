@@ -37,7 +37,7 @@ SERVER_NAME=myserver
 SERVER_URL="$SERVER_NAME.domain.com"
 
 # Create the website directory and set permissions
-sudo mkdir -p /var/www/$SERVER_URL/
+sudo mkdir -p /var/www/$SERVER_URL
 sudo chown -R $USER:$USER /var/www/$SERVER_URL
 sudo chmod -R 755 /var/www
 

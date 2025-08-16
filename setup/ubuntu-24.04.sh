@@ -43,6 +43,9 @@ sed -i -e '/^#*PermitRootLogin/s/^.*$/PermitRootLogin no/' /etc/ssh/sshd_config
 sed -i -e '/^#*PasswordAuthentication/s/^.*$/PasswordAuthentication no/' /etc/ssh/sshd_config
 systemctl restart ssh.service
 
+# add empty netrc file
+su $NEWUSER -c "cd; touch .netrc; chmod 600 .netrc"
+
 # enable ufw
 for p in "${ALLOWEDPORTS[@]}"; do
   ufw allow "$p/tcp"
