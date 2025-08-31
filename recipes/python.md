@@ -31,6 +31,11 @@ make altinstall
 update-alternatives --install /usr/local/bin/python python "/usr/local/bin/python${VERSION%.*}" 1
 update-alternatives --set python "/usr/local/bin/python${VERSION%.*}"
 update-alternatives --display python
+
+# you might want to do the same with pip
+update-alternatives --install /usr/local/bin/pip pip "/usr/local/bin/pip${VERSION%.*}" 1
+update-alternatives --set pip "/usr/local/bin/pip${VERSION%.*}"
+update-alternatives --display pip
 ```
 
 ### Update
