@@ -41,8 +41,8 @@ update-alternatives --display pip
 ### Update
 
 To update patch versions (e.g. from 3.13.5 to 3.13.6), simply follow the same
-installation steps as above. The `make altinstall` command will overwrite the
-existing files with the new version.
+installation steps as above (excluding the update-alternatives part). The 
+`make altinstall` command will overwrite the existing files with the new version.
 
 When updating to a new minor version (e.g. from 3.12.4 to 3.13.6), you can keep
 multiple versions installed since binaries are versioned.
