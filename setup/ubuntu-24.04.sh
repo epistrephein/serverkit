@@ -8,7 +8,7 @@ NEWUSER="epistrephein"
 SSHPORT=4444
 ALLOWEDPORTS=( 80 443 "$SSHPORT" )
 TIMEZONE="Etc/UTC"
-PACKAGES=( tmux git htop ncdu nload autojump unzip tree silversearcher-ag ccze nginx-extras )
+PACKAGES=( tmux git htop ncdu nload autojump unzip tree ripgrep fd-find ccze nginx-extras )
 
 ###########################################################
 

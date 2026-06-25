@@ -32,6 +32,10 @@ alias ....="cd ../../.."
 mkcd() { mkdir -p -- "$1" && cd -P -- "$1" || return; }
 cl() { if [ -d "${1:-$PWD}" ]; then ll "${1:-$PWD}"; else cat "$1"; fi }
 
+# find
+alias ffile='fdfind -H -t f'
+alias ftext='rg -l -F -H --hidden'
+
 # updates
 alias u="apt list --upgradable"
 alias uuu="sudo apt-get update; sudo apt-get upgrade; sudo apt-get dist-upgrade; sudo apt-get autoremove; sudo apt-get autoclean"
