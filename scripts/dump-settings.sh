@@ -21,8 +21,9 @@ mkdir -p "$BACKUP_FOLDER/apt"
 apt list --manual-installed=true 2>/dev/null | tail -n +2 | cut -d/ -f1 > "$BACKUP_FOLDER/apt/manual-packages.txt"
 
 # Backup nginx sites configurations
-mkdir -p "$BACKUP_FOLDER/nginx"
+mkdir -p "$BACKUP_FOLDER/nginx/snippets"
 rsync -a --copy-links --delete "/etc/nginx/sites-available/" "$BACKUP_FOLDER/nginx/"
+rsync -a --copy-links --delete --exclude="fastcgi-php.conf" --exclude="snakeoil.conf" "/etc/nginx/snippets/" "$BACKUP_FOLDER/nginx/snippets/"
 
 # Backup www directories
 mkdir -p "$BACKUP_FOLDER/www"
