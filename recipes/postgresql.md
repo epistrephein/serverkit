@@ -21,7 +21,7 @@ echo "deb [signed-by=/etc/apt/keyrings/postgresql.gpg] http://apt.postgresql.org
 
 # update and install PostgreSQL
 sudo apt update
-sudo apt install postgresql-17 postgresql-contrib-17 libpq-dev
+sudo apt install postgresql-18 postgresql-contrib-18 libpq-dev
 
 # verify installation
 psql --version
