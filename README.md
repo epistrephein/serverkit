@@ -54,7 +54,6 @@ sudo ln -s /etc/nginx/sites-available/$SERVER_URL /etc/nginx/sites-enabled/$SERV
 # Remove the default nginx configuration and reload nginx
 sudo rm /etc/nginx/sites-enabled/default
 sudo rm /etc/nginx/sites-available/default
-sudo rm -rf /var/www/html
 sudo systemctl reload nginx
 
 # Create the SSL directory for site certificates
