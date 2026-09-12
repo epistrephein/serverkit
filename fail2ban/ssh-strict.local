@@ -1,0 +1,11 @@
+[DEFAULT]
+bantime = 1h
+bantime.increment = true
+bantime.factor = 4
+bantime.maxtime = 4w
+
+[sshd]
+enabled = true
+port = ssh
+maxretry = 2
+findtime = 10m
